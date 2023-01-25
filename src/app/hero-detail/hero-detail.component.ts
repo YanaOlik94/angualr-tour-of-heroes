@@ -12,11 +12,11 @@ import {HeroService} from "../hero.service";
 })
 export class HeroDetailComponent implements OnInit {
 
+  hero: Hero | undefined;
+
   constructor(private route: ActivatedRoute,
               private heroService: HeroService,
               private location: Location) {}
-
-  hero: Hero | undefined;
 
   ngOnInit(): void {
     this.getHero();
@@ -30,5 +30,12 @@ export class HeroDetailComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  save(): void {
+    if (this.hero) {
+      this.heroService.updateHero(this.hero)
+        .subscribe(() => this.goBack());
+    }
   }
 }
